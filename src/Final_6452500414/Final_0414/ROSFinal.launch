@@ -1,0 +1,10 @@
+<launch>
+   
+    <node name="turtlesim_node" pkg="turtlesim" type="turtlesim_node"/>
+	
+    <node name="GUI_Remote" pkg="Final_6452500414" type="Turtle_Control.py" output="screen"/>
+
+   <node name="MotionLog" pkg="Final_6452500414" type="MotionLog.py" output="screen"/>
+
+	
+</launch>

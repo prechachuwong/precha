@@ -1,0 +1,28 @@
+<launch>
+    <!-- Define the URDF model argument -->
+    <!-- <arg name="urdf_model" default="$(find robot_description)/urdf/robot.urdf"/> -->
+
+    <!-- Launch the display.launch file from urdf_tutorial package -->
+    <!-- <include file="$(find urdf_tutorial)/launch/display.launch"> -->
+    <!-- Pass the model argument to the display.launch file -->
+    <!-- <arg name="model" value="$(arg urdf_model)"/> -->
+    <!-- </include> -->
+    <arg name="model" default="$(find robot_description)/urdf/robot.urdf" />
+    <arg name="gui" default="true" />
+    <arg name="rvizconfig" default="$(find urdf_tutorial)/rviz/urdf.rviz" />
+
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model)" />
+    <param name="use_gui" value="$(arg gui)" />
+
+    <!-- <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" /> -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
+
+    <node name="serial_node" pkg="rosserial_arduino" type="serial_node.py">
+        <param name="port" type="string" value="/dev/ttyACM0" />
+        <param name="baud" type="int" value="57600" />
+    </node>
+
+    <node name="GUI_SERVO" pkg="robot_description" type="ROS_GUI_SERVO.py" output="screen">
+    </node>
+</launch>
